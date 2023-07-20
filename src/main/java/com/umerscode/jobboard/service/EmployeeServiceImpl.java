@@ -45,7 +45,6 @@ public class EmployeeServiceImpl implements EmployeeServices {
     public Employee updateEmployee(Long id, Employee employee) {
         Employee employeeFromDb = employeeRepo.findById(id)
                 .orElseThrow(()-> new IllegalStateException("employee with id "+id+" not found"));
-       employeeFromDb.setEmployeeCode(UUID.randomUUID().toString());
        employeeFromDb.setPhoneNo(employee.getPhoneNo());
        employeeFromDb.setJobType(employee.getJobType());
        employeeFromDb.setAddress(employee.getAddress());
@@ -57,9 +56,9 @@ public class EmployeeServiceImpl implements EmployeeServices {
     @Override
     public Employee registerEmployee(@NotNull RegisterEmployeeDto registerDto) {
 
-        String uuid = UUID.randomUUID().toString().substring(0,8);
-        while(employeeRepo.findByEmployeeCode(uuid).isPresent())
-        { uuid = UUID.randomUUID().toString().substring(0,8);}
+      String uuid = UUID.randomUUID().toString().substring(0,8);
+//        while(employeeRepo.findByEmployeeCode(uuid).isPresent())
+//        { uuid = UUID.randomUUID().toString().substring(0,8);}
 
         if(userRepo.findUserByEmail(registerDto.getUser().getEmail()).isPresent())
            throw new IllegalStateException("User email is taken");

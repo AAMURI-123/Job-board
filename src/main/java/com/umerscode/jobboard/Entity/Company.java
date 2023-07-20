@@ -16,7 +16,8 @@ import static jakarta.persistence.GenerationType.*;
 @ToString
 public class Company {
 
-    public Company(String name, String email, String phoneNo, String address) {
+    public Company(Long id,String name, String email, String phoneNo, String address) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNo = phoneNo;
@@ -34,4 +35,6 @@ public class Company {
 
     @OneToMany(cascade = ALL,mappedBy = "company",fetch = FetchType.EAGER)
     private List<Job> jobs  = new ArrayList<>();
+
+
 }

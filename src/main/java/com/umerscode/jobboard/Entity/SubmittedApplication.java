@@ -10,7 +10,7 @@ import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Table(name = "submitted_applications")
- @Data
+@Setter
 @NoArgsConstructor
 public class SubmittedApplication {
 
@@ -19,7 +19,7 @@ public class SubmittedApplication {
     private Long id;
 
     @Column(unique = true)
-   // @Getter
+    @Getter
     private String applicationNumber;
 
     @ManyToOne
@@ -30,5 +30,8 @@ public class SubmittedApplication {
     @JoinColumn(name = "job_id")
     private Job job;
 
-
+    public SubmittedApplication(Employee employee, Job job) {
+        this.employee = employee;
+        this.job = job;
+    }
 }

@@ -1,6 +1,5 @@
-package com.umerscode.jobboard.Controllers;
+package com.umerscode.jobboard.Controller;
 
-import com.umerscode.jobboard.Dto.AppSubmitDto;
 import com.umerscode.jobboard.Dto.RegisterEmployeeDto;
 import com.umerscode.jobboard.Entity.AppUser;
 import com.umerscode.jobboard.Entity.Employee;
@@ -8,24 +7,31 @@ import com.umerscode.jobboard.Entity.Job;
 import com.umerscode.jobboard.Entity.SubmittedApplication;
 import com.umerscode.jobboard.repository.EmployeeRepo;
 import com.umerscode.jobboard.service.EmployeeServiceImpl;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
+@Component
 @RestController
 @RequestMapping("/api/v1/employee")
-@RequiredArgsConstructor
 public class EmployeeController {
+
 
     private final EmployeeRepo employeeRepo;
     private final EmployeeServiceImpl employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeRepo employeeRepo, EmployeeServiceImpl employeeService) {
+        this.employeeRepo = employeeRepo;
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/profile")
     @PreAuthorize("hasAuthority('EMPLOYEE')")

@@ -1,4 +1,4 @@
-package com.umerscode.jobboard.Controllers;
+package com.umerscode.jobboard.Controller;
 
 import com.umerscode.jobboard.Dto.RegisterCompanyDto;
 import com.umerscode.jobboard.Entity.AppUser;
@@ -7,14 +7,11 @@ import com.umerscode.jobboard.Entity.Employee;
 import com.umerscode.jobboard.Entity.Job;
 import com.umerscode.jobboard.repository.CompanyRepo;
 import com.umerscode.jobboard.service.CompanyServiceImpl;
-import com.umerscode.jobboard.service.CompanyServices;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +20,13 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/company")
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class CompanyController {
 
-    private final CompanyServiceImpl companyService;
-    private final CompanyRepo companyRepo;
+    @Autowired
+    private  CompanyServiceImpl companyService;
+    @Autowired
+    private CompanyRepo companyRepo;
 
     @GetMapping("/findEmployeeByJob/{jobType}")
     @PreAuthorize("hasAuthority('MANAGER')")

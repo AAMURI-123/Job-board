@@ -2,8 +2,10 @@ package com.umerscode.jobboard.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +18,8 @@ import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Table(name = "users")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data @NoArgsConstructor
+@Builder @AllArgsConstructor     @Jacksonized
 public class AppUser implements UserDetails {
 
     @Id

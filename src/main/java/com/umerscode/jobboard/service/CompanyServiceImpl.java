@@ -55,6 +55,7 @@ public class CompanyServiceImpl implements CompanyServices{
     @Override
     public Job updateJob(Long id, Job job) {
     Job jobFromDb = jobRepo.findById(id).orElseThrow(()-> new IllegalStateException("Job with id "+ id+" not found"));
+        jobFromDb.setJobType(job.getJobType());
         jobFromDb.setPayPerHour(job.getPayPerHour());
         jobFromDb.setEducationLevel(job.getEducationLevel());
         jobFromDb.setYearsOfExperience(job.getYearsOfExperience());
@@ -68,9 +69,8 @@ public class CompanyServiceImpl implements CompanyServices{
         while(jobRepo.findByJobNumber(uuid).isPresent())
         { uuid = UUID.randomUUID().toString().substring(0,8);}
         AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        job.setCompany(companyRepo.findByEmail(currentUser.getEmail()));
-        Company byEmail = companyRepo.findByEmail(currentUser.getEmail());
-        byEmail.getJobs();
+        Company company = companyRepo.findByEmail(currentUser.getEmail());
+        job.setCompany(company);
 
         job.setJobNumber(uuid);
         return jobRepo.save(job);

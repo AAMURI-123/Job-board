@@ -14,9 +14,9 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class RegisterEmployeeDto {
 
-    @NotEmpty(message = "Invalid information") @NotNull(message = "Invalid information")
+    //@NotEmpty(message = "Invalid information") @NotNull(message = "Invalid information")
     private AppUser user;
-    @NotEmpty(message = "Invalid information") @NotNull(message = "Invalid information")
+    //@NotEmpty(message = "Invalid information") @NotNull(message = "Invalid information")
     private Employee employee;
 
 }

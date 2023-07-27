@@ -5,8 +5,10 @@ import com.umerscode.jobboard.Entity.AppUser;
 import com.umerscode.jobboard.Entity.Employee;
 import com.umerscode.jobboard.Entity.Job;
 import com.umerscode.jobboard.Entity.SubmittedApplication;
+import com.umerscode.jobboard.Jwt.JwtService;
 import com.umerscode.jobboard.repository.EmployeeRepo;
 import com.umerscode.jobboard.service.EmployeeServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,24 +23,20 @@ import static org.springframework.http.HttpStatus.*;
 @Component
 @RestController
 @RequestMapping("/api/v1/employee")
+@RequiredArgsConstructor
 public class EmployeeController {
 
 
     private final EmployeeRepo employeeRepo;
     private final EmployeeServiceImpl employeeService;
+    private final JwtService jwtServices;
 
-    @Autowired
-    public EmployeeController(EmployeeRepo employeeRepo, EmployeeServiceImpl employeeService) {
-        this.employeeRepo = employeeRepo;
-        this.employeeService = employeeService;
-    }
-
-    @GetMapping("/profile")
-    @PreAuthorize("hasAuthority('EMPLOYEE')")
-    public ResponseEntity<Employee> getEmployeeProfile(){
-        AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return ResponseEntity.ok().body(employeeRepo.findByEmail(currentUser.getEmail()));
-    }
+//    @GetMapping("/profile")
+//    @PreAuthorize("hasAuthority('EMPLOYEE')")
+//    public ResponseEntity<Employee> getEmployeeProfile(){
+//        AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    return ResponseEntity.ok().body(employeeRepo.findByEmail(currentUser.getEmail()));
+//    }
 
     @GetMapping("/jobs")
    @PreAuthorize("hasAuthority('EMPLOYEE')")
@@ -61,7 +59,10 @@ public class EmployeeController {
 
     @PostMapping("/register")
     public ResponseEntity<Employee> registerEmployee(@RequestBody RegisterEmployeeDto registerDto){
-        return new ResponseEntity<>(employeeService.registerEmployee(registerDto), CREATED);
+        System.out.println("register...");
+        Employee registerEmployee = employeeService.registerEmployee(registerDto);
+        final String jwtToken = jwtServices.generateJwt(registerDto.getUser());
+        return new ResponseEntity<>(registerEmployee, CREATED);
     }
 
     @PostMapping("/application-submit")

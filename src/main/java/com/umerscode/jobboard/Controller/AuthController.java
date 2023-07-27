@@ -2,6 +2,7 @@ package com.umerscode.jobboard.Controller;
 
 import com.umerscode.jobboard.Dto.AuthenticationRequest;
 import com.umerscode.jobboard.Entity.AppUser;
+import com.umerscode.jobboard.Jwt.JwtService;
 import com.umerscode.jobboard.repository.CompanyRepo;
 import com.umerscode.jobboard.repository.EmployeeRepo;
 import com.umerscode.jobboard.repository.UserRepo;
@@ -23,6 +24,7 @@ public class AuthController {
     private final UserRepo userRepo;
     private final EmployeeRepo employeeRepo;
     private final CompanyRepo companyRepo;
+    private final JwtService jwtService;
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request){
@@ -42,11 +44,13 @@ public class AuthController {
 
     @GetMapping("/user/profile")
     public ResponseEntity<?> redirectingUserAfterAuthentication(){
+
        AppUser activeUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-       if(activeUser.getRole().name().equals("EMPLOYEE"))
-            return ResponseEntity.ok().body(employeeRepo.findByEmail(activeUser.getEmail()));
-
+        final String jwtToken = jwtService.generateJwt(activeUser);
+        System.out.println("JWt => " + jwtToken);
+       if(activeUser.getRole().name().equals("EMPLOYEE")) {
+           return ResponseEntity.ok().body(employeeRepo.findByEmail(activeUser.getEmail()));
+       }
        return ResponseEntity.ok().body(companyRepo.findByEmail(activeUser.getEmail()));
     }
 }

@@ -29,9 +29,9 @@ public class JobBoardApplication {
 //	CommandLineRunner commandLineRunner(UserRepo userRepo, EmployeeRepo employeeRepo
 //									,PasswordEncoder passwordEncoder,CompanyRepo companyRepo, JobRepo jobRepo){
 //		return args -> {
-//			AppUser umer = new AppUser(null,"umer@gmail.com",passwordEncoder.encode("pass"), EMPLOYEE);
-//			AppUser aamuri = new AppUser(null,"medtronic@gmail.com",passwordEncoder.encode("pass"), MANAGER);
-//			userRepo.saveAll(List.of(umer,aamuri));
+////			AppUser umer = new AppUser(null,"umer@gmail.com",passwordEncoder.encode("pass"), EMPLOYEE);
+////			AppUser aamuri = new AppUser(null,"medtronic@gmail.com",passwordEncoder.encode("pass"), MANAGER);
+////			userRepo.saveAll(List.of(umer,aamuri));
 //
 //			Employee employee1 = new Employee(null, UUID.randomUUID().toString(),
 //					"umer","ali","umer@gmail.com","123786030","Medical Assembly","2390 ave ln blaine,MN,55124",
@@ -42,8 +42,8 @@ public class JobBoardApplication {
 //					1,"Bachelor's Degree");
 //			employeeRepo.saveAll(List.of(employee1,employee2));
 //
-//			Company medtronic = new Company("Medtronic","medtronic@gmail.com","332786907","1300 commic ave Fridley,MN,55443");
-//			Company boston = new Company("Boston","boston@gmail.com","332786907","47 ave new brighton,MN,55403");
+//			Company medtronic = new Company(null,"Medtronic","medtronic@gmail.com","332786907","1300 commic ave Fridley,MN,55443");
+//			Company boston = new Company(null,"Boston","boston@gmail.com","332786907","47 ave new brighton,MN,55403");
 //			companyRepo.saveAll(List.of(medtronic,boston));
 //
 //			Job job1 = new Job(UUID.randomUUID().toString(),"Medical Assembly",20,"High school",0,medtronic);
